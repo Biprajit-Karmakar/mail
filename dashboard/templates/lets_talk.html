@@ -1,0 +1,160 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block content %}
+
+<div class="container-fluid mt-2">
+    <div class="row">
+        <div class="col">
+            <div class="card mt-3">
+            </div>
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="" id="">
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <h5>Lets Talk List</h5>
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table id="subscriber_list" class="table table-borderless table-striped table-hover">
+                                <tr>
+                                    <th>Id </th>
+                                    <th>Name </th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>Budget</th>
+                                  
+                                    <th>Created </th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                {% for talk in lets_talk %}
+                                <tr id="what_done_{{ item.id }}">
+                                    <td>{{ talk.id }}</td>
+                                    <td>{{ talk.name }}</td>
+                                    <td>{{ talk.email }}</td>
+                                    <td>{{ talk.phone_number }}</td>
+                                    <td>{{ talk.get_budget_display }}</td>
+                                   
+                                    <td>{{talk.created_at|date:'Y-m-d'}}</td>
+
+                                    <td>
+                                        <select title="change status" id="talk_change_status_id_{{ talk.id}}" onchange="change_talk_status('{{ talk.id }}')">
+                                            {% for item in status %}
+                                                <option {% if item.0 == talk.status %} selected {% endif %} value="{{ item.0 }}">{{item.1}}</option>
+                                            {% endfor %}
+                                        </select>  
+                                    </td>
+                                    <th>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+
+                                                <form action="{% url 'dashboard:delete_lets_talk_url' %}"method="POST" >
+                                                    {% csrf_token %}
+                                                    <input type="hidden" value="{{ talk.id }}" name="id">
+                                                    <button title="Delete Item" onclick="check()" class="btn btn-icon btn-sm btn-outline-primary" ><i class="fa fa-trash"></i></button>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-6">
+                                                
+                                                   
+                                    
+                                                <button  data-toggle="modal" data-target="#exampleModal_{{ talk.id }}" title="View" class="btn btn-icon btn-sm btn-outline-primary" ><i class="fa fa-eye"></i></button>
+                                               
+                                            </div>
+                                        </div>
+
+                                        
+
+
+
+                                    </th>
+                                </tr>
+
+
+                                <div class="modal fade" id="exampleModal_{{ talk.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{ talk.message }}
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                          <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+
+                                {% endfor %}
+                                
+                            </table>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+csrf = '{{ csrf_token }}';
+function check(){
+    if (confirm("Do you want to delete?") == true) {
+        return true;
+    } else {
+        //cancle the from submission 
+        $(this).submit(function(e){
+            e.preventDefault();
+            location.reload()
+            return  false;
+        })
+        
+    }
+}
+
+function change_talk_status(id){
+    let url =  "{% url 'dashboard:lets_talk_status_change_url' %}";
+    status = $("#talk_change_status_id_"+id).val()
+    $.ajax({
+        url: url,
+        data: {'id': id,'status' : status, 'csrfmiddlewaretoken': csrf},
+        type: "POST",
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+        },
+        success: function (data) {
+            toastr.success('Status change successfully');
+            $('#speaker_'+id).html('');
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
+</script>
+
+{% endblock %}

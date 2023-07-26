@@ -1,0 +1,320 @@
+.blogdetails-thumbnail img {
+    object-fit: cover;
+}
+
+.descriptionlist {
+    padding-left: 2rem;
+}
+.blogdetails .bloginfo .blogdescriptions-header .authorinfo-shareinfo .shareinfo .sociallist { 
+    flex-wrap: wrap;
+}
+
+  
+.ourservice {
+  padding: 3rem 0 0;
+}
+
+.ourservice .ourservice-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.ourservice .ourservice-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.ourservice .ourservice-header .ourservice-title {
+  color:#4a5568;
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3333333333;
+}
+
+@media screen and (min-width: 48rem) {
+  .ourservice .ourservice-header .ourservice-title {
+    font-family: "Titillium Web";
+    font-style: normal;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.375;
+  }
+}
+
+@media screen and (min-width: 62rem) {
+  .ourservice .ourservice-header .ourservice-title {
+    font-family: "Titillium Web";
+    font-style: normal;
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+}
+
+@media screen and (min-width: 75rem) {
+  .ourservice .ourservice-header .ourservice-title {
+    font-family: "Titillium Web";
+    font-style: normal;
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+}
+
+.ourservice .ourservice-header .servicetext {
+  color:#4a5568;
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-size: .875rem;
+  font-weight: 400;
+}
+
+@media screen and (min-width: 48rem) {
+  .ourservice .ourservice-header .servicetext {
+    font-size: 1rem;
+  }
+}
+
+.servicebanner {
+  min-height: 50vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (min-width: 62rem) {
+  .servicebanner {
+    min-height: 44.5rem;
+  }
+}
+
+.servicebanner .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.servicebanner .overlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.servicebanner-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.servicebanner .servicebanner-title {
+  color:#ffffff;
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3333333333;
+}
+
+@media screen and (min-width: 48rem) {
+  .servicebanner .servicebanner-title {
+    font-family: "Titillium Web";
+    font-style: normal;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.375;
+  }
+}
+
+@media screen and (min-width: 62rem) {
+  .servicebanner .servicebanner-title {
+    font-family: "Titillium Web";
+    font-style: normal;
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+}
+
+@media screen and (min-width: 75rem) {
+  .servicebanner .servicebanner-title {
+    font-family: "Titillium Web";
+    font-style: normal;
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+}
+
+
+
+.custom-class-for-link{
+  background:#0876fc;
+  color:#fff;
+  border-radius:0.5rem;
+  border-radius:0.5rem;
+  font-family:"Titillium Web";
+  font-style:normal;
+  font-size:0.875rem;
+  font-weight:700;
+  line-height:1.4285714286;
+  letter-spacing:0.015rem;
+  width:12.5rem;
+  height:3.625rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  transition:background 200ms ease-in-out
+}
+@media screen and (min-width: 62rem){
+  .custom-class-for-link{
+      font-family:"Titillium Web";
+      font-style:normal;
+      font-size:1rem;
+      font-weight:700;
+      line-height:1.5
+  }
+}
+.custom-class-for-link:not([disabled]):hover{
+  background:#023c83;
+ 
+
+}
+.card-technology-cap svg, .card-technology-cap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.career-details-content {
+  display:flex;
+  flex-direction:column;
+  gap: 0.25rem;
+  font-family:"Titillium Web"; 
+}
+
+.career-details .career-details-content ul, ol{
+  padding-left: 1.25rem;
+}
+#container {
+  width: 1000px;
+  margin: 20px auto;
+}
+.ck-editor__editable[role="textbox"] {
+  /* editing area */
+  min-height: 200px;
+}
+
+.image  figcaption{
+  padding-left: 1.25rem;
+  text-align: center;
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-size: 1.125rem;
+  font-weight: normal;
+  line-height: 1.6666666667;
+}
+heading_heading1 {
+  text-size-adjust: 40px;
+}
+.h1class {
+
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-size: 2rem;
+  font-weight: normal;
+  line-height: 1.33333;
+  color: black !important;
+
+}
+.h2class {
+  font-size: 1.5rem;
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.33333;
+  color: black !important;
+
+}
+.h3class {
+  font-size: 1.17rem;
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.33333;
+  color: #718096 !important;
+
+}
+.h4class {
+  font-size: 1rem;
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.33333;
+  color: #718096 !important;
+
+}
+.h5class {
+  font-size: .83rem;
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.33333;
+  color: #718096 !important;
+
+}
+.h6class {
+  font-size: .67rem;
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.33333;
+  color: #718096 !important;
+
+}
+
+
+ /*  design for mobile devices less than 576 px */
+@media only screen and (max-width: 576px) {
+
+  .h1class {
+    font-size: 1.3rem;
+    line-height: 1.5;
+  }
+  .h2class {
+    font-size: 1.125rem;
+    line-height: 1.5;
+  }
+  .h3class {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .h4class {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .h5class {
+    font-size: 0.7rem;
+    line-height: 1.5;
+  }
+  .h5class {
+    font-size: 0.5rem;
+    line-height: 1.5;
+  }
+
+}

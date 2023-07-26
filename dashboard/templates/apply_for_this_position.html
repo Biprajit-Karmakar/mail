@@ -1,0 +1,148 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mt-3">
+                <div class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="text-secondary">Current Opportnities</label>
+                                <input name="title" class="form-control">
+                                    
+                                   
+                            </div>
+                            <div class="col-md-3">
+                                <label class="text-secondary">Status</label>
+                                <select name="status" class="form-control">
+                                    <option disabled selected>Select Type</option>
+                                    {% for item in apply_status %}
+                                        <option {% if request.GET.status|add:"0" == item.0 %} selected="selected" {% endif %}  value="{{ item.0 }}" > {{ item.1}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="text-secondary">Email</label>
+                                <input name="email" type="email" class="form-control">
+                                
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="text-secondary">Search & Filter</label> <br/>
+                                <button class="btn btn-block btn-secondary">Filter</button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card mt-3">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Applycation List</h5>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="card-body table-responsive">
+                            <table id="subscriber_list" class="table table-borderless table-striped table-hover">
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>CV</th>
+                                    <th>Current Opportnities</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                {% for position in positions %}
+                                <tr id="what_done_{{ item.id }}">
+                                    <td>{{ position.first_name }}</td>
+                                    <td>{{ position.last_name }}</td>
+                                    <td>{{ position.email }}</td>
+                                    <td>
+                                        {% if  position.upload_cv%}
+                                            <a target="_blank" href="{{ position.upload_cv.url }}"><button class="btn btn-icon btn-sm btn-outline-primary" ><i class="fa fa-file"></i></button></a>    
+                                        {% endif  %} 
+                                    </td>
+                                    <td>{{ position.current_opportunities.title }}</td>
+                                    <td>{{position.date }}</td>
+                                    <td>
+                                        <select style="width: 110px;" onchange="change_apply_status('{{ position.id }}')" class="form-control" id="apply_status_id_{{ position.id }}">
+                                            {% for status in apply_status %}
+                                                <option class="form-control" {% if status.0 == position.status %} selected {% endif %} value="{{ status.0 }}">{{ status.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="form-group row">
+                                            <div class="col-sm-1">
+                                                <form action="{% url 'dashboard:apply_for_this_position_delete_url' %}"method="POST" >
+                                                    {% csrf_token %}
+                                                    <input type="hidden" value="{{ position.id }}" name="id">
+                                                    <button title="Delete Item" onclick="check()"  type="submit" class="btn btn-icon btn-sm btn-outline-primary" ><i class="fa fa-trash"></i></button>
+                                                </form> 
+                                            </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </table>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+function check(){
+    if (confirm("Do you want to delete?") == true) {
+        return true;
+    } else {
+        //cancle the from submission 
+        $(this).submit(function(e){
+            e.preventDefault();
+            location.reload()
+            return  false;
+        })
+        
+    }
+}
+csrf = '{{ csrf_token }}';
+function change_apply_status(id){
+    var status = $("#apply_status_id_"+id).val()
+    var csrf= '{{ csrf_token }}'
+    let url = "{% url 'dashboard:apply_for_this_position_status_url' %}";
+    var data = {'id': id, 'status': status, 'csrfmiddlewaretoken': csrf}
+    $.ajax({
+        url: url,
+        data: data,
+        type: "POST",
+        success: function (data) {
+            toastr.success('Status changed successfully')
+        },
+        error: function (data) {
+        }
+    });
+}
+
+
+
+
+</script>
+
+{% endblock %}

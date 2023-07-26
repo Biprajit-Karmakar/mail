@@ -1,0 +1,36 @@
+{% load check_permission %}
+
+<li class="nav-item has-treeview {%  if request|check_active_menu:'blog_blog_list_url,save_blog_url,edit_blog_url,delete_blog_row_url,blog_blog_author_url,save_blog_blog_author_url,delete_blog_blog_author_url,edit_blog_blog_author_url,blog_blog_category_url,save_blog_category_url,delete_blog_blog_category_url,edit_blog_blog_category_url'  %} menu-open {% endif %}">
+  <a href="" class="nav-link {%  if request|check_active_menu:'blog_blog_list_url,save_blog_url,edit_blog_url,delete_blog_row_url,blog_blog_author_url,save_blog_blog_author_url,delete_blog_blog_author_url,edit_blog_blog_author_url,blog_blog_category_url,save_blog_category_url,delete_blog_blog_category_url,edit_blog_blog_category_url'  %} active {% endif %}">
+      <i class="nav-icon fa fa-users"></i>
+      <p> Blog </p>
+      <i class="right fas fa-angle-left"></i>
+  </a>
+  <ul class="nav nav-treeview">
+      <li class="nav-item active">
+        <a href="{% url 'dashboard:blog_blog_list_url' %}"
+           class="nav-link">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Blog List</p>
+        </a>
+      </li>
+  </ul>
+  <ul class="nav nav-treeview">
+    <li class="nav-item active">
+      <a href="{% url 'dashboard:blog_blog_author_url' %}"
+         class="nav-link">
+        <i class="far fa-circle nav-icon"></i>
+        <p>Blog Author</p>
+      </a>
+    </li>
+</ul>
+<ul class="nav nav-treeview">
+  <li class="nav-item active">
+    <a href="{% url 'dashboard:blog_blog_category_url' %}"
+       class="nav-link">
+      <i class="far fa-circle nav-icon"></i>
+      <p>Blog Category</p>
+    </a>
+  </li>
+</ul>
+</li>

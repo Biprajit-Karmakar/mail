@@ -1,0 +1,471 @@
+{% extends 'homepage/base_homepage.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="career-banner">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-12 mx-lg-auto">
+					<div class="career-banner-content">
+						<figure class="career-thumbnail">
+							<img src="{{ career.image.url }}">
+						</figure>
+
+						<div class="bannerinfo">
+							<div class="bannerinfo-header">
+								<h1 class="banner-title">{{ career.title }}</h1>
+
+								<div class="info">
+									<p>Vacancy : {{ career.number_of_vacancy}}</p>
+									<p>Job Type : {{ career.get_applicant_type_display }}</p>
+									<p>Deadline : {{ career.deadline }}</p>
+								</div>
+							</div>
+
+							<div class="bannerinfo-body">
+								{% if career.get_status == 1%}
+									<a style="font-size: 1rem;" href="#closesection" class="btn-explore">Closed</a>
+									{% else %}
+										<a style="font-size: 1rem;" href="#applysection" class="btn-explore">Apply Now</a>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--========== CAREER-BANNER END ============-->
+
+	<!--========== CAREER-DETAILS START ============-->
+	<section class="career-details">
+		<div class="container">
+			<div class="col-lg-8 mx-lg-auto">
+				<div class="career-details-content" >
+                    {{ career.description|safe }}
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--========== CAREER-DETAILS END ==============-->
+
+	<!--========== CAREER-APPLY START ==============-->
+
+	{% if career.get_status == 0 %}
+	
+	<section class="career-apply" id="applysection">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-xl-6 mx-lg-auto col-12">
+					
+					<div class="apply">
+						<div class="apply-header">
+							<h2 class="apply-title">Please enter your personal information</h2>
+						</div>
+
+						<div class="apply-body">
+							<form id="applyform" class="applyform">
+								<div class="row g-4">
+									<div class="col-md-6 col-12">
+										<div id="firstname_apend_id" class="inputbox">
+											<label for="firstname" class="inputlabel">First Name *</label>
+											<input type="text" id="firstname" class="inputfield">
+											<p id="first_error" class="error-message"></p>
+										</div>
+									</div>
+
+									<div class="col-md-6 col-12">
+										<div id="lastname_apend_id" class="inputbox ">
+											<label for="lastname" class="inputlabel">Last Name *</label>
+											<input type="text" id="lastname" class="inputfield">
+											<p id="last_error" class="error-message"></p>
+
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-12">
+										<div id="email_apend_id" class="inputbox ">
+											<label for="careeremail" class="inputlabel">E-mail *</label>
+											<input type="email" id="careeremail" class="inputfield ">
+											<p id="email_error" class="error-message"></p>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-12">
+										<div id="update_cv_apend_id" class="inputbox">
+											<label class="inputlabel">Upload CV *</label>
+
+											<div class="upload">
+												<p id="file_name" class="upload-text">No file chosen</p>
+
+												<div class="upload-info">
+													<input accept=".doc,.docx,.pptx,.pdf" onchange="InvalidSize(this)" type="file" id="uploadcv" class="inputfield" hidden>
+													<label for="uploadcv" role="button" class="btn-choose">Choose File</label>	
+												</div>
+											</div>
+											<p id="cv_error" class="error-message"></p>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-12">
+										<div id="capcha_apend_id" class="inputbox">
+											<label id="mathQuestion" for="capcha" class="inputlabel"></label>
+											<input type="text" id="capcha" class="inputfield">
+											<p id="capcha_error" class="error-message"></p>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-12">
+										<div class="d-flex justify-content-end">
+											<button onclick="SaveObject()" id="applyButton" class="btn-detail" type="button">Apply For This Position</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{% else %}
+	<section class="career-apply" id="closesection">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-xl-6 mx-lg-auto col-12">
+				<!-- CAREER-EMPTY SCREEN -->
+				<div class="nojob">
+					<div class="nojob-content">
+					  <figure class="icon">
+						<svg
+						  width="434"
+						  height="316"
+						  viewBox="0 0 434 316"
+						  fill="none"
+						  xmlns="http://www.w3.org/2000/svg"
+						>
+						  <g clip-path="url(#no-opportunities-icon)">
+							<path
+							  d="M354.854 88.9994C351.859 88.9994 348.904 87.6397 346.969 85.061L317.43 45.6763C314.168 41.3263 315.05 35.1538 319.4 31.8917C323.751 28.6287 329.922 29.5109 333.184 33.861L362.723 73.2456C365.985 77.5956 365.103 83.7682 360.753 87.0302C358.982 88.3594 356.91 88.9994 354.854 88.9994Z"
+							  fill="#80AF52"
+							/>
+							<path
+							  d="M354.844 89C353.805 89 352.757 88.8365 351.733 88.4939C347.712 87.1538 345 83.3916 345 79.1538V39.7692C345 34.3312 349.409 29.9231 354.846 29.9231C360.283 29.9231 364.692 34.3312 364.692 39.7692V49.6154L376.508 33.8615C379.771 29.5115 385.942 28.6303 390.292 31.8923C394.642 35.1543 395.524 41.3269 392.262 45.6769L362.723 85.0615C360.828 87.588 357.885 89 354.844 89Z"
+							  fill="#70993F"
+							/>
+							<path
+							  d="M236.641 139.215C236.636 139.216 236.631 139.216 236.621 139.215H197.237C194.204 139.215 191.342 137.817 189.476 135.428C187.609 133.037 186.949 129.922 187.685 126.98L197.531 87.5952C198.627 83.2127 202.564 80.1377 207.083 80.1377H226.775C231.294 80.1377 235.232 83.2127 236.327 87.5952L246.016 126.35C246.323 127.301 246.487 128.315 246.487 129.367C246.487 134.806 242.079 139.215 236.641 139.215ZM209.848 119.522H224.011L219.088 99.83H214.771L209.848 119.522Z"
+							  fill="#3C3B3D"
+							/>
+							<path
+							  d="M88.9988 175.646L59.4603 303.646H29.9219V175.646H88.9988Z"
+							  fill="#60534A"
+							/>
+							<path
+							  d="M404.077 175.646V303.646H374.538L345 175.646H404.077Z"
+							  fill="#60534A"
+							/>
+							<path
+							  d="M108.691 89V118.538H29.9219V89H88.9988H108.691Z"
+							  fill="#F14742"
+							/>
+							<path
+							  d="M88.9958 59.4609V88.9994H29.9189H10.2266V59.4609H88.9958Z"
+							  fill="#EA7E23"
+							/>
+							<path
+							  d="M384.382 59.4609V88.9994C384.382 105.314 371.158 118.538 354.843 118.538C338.528 118.538 325.305 105.314 325.305 88.9994V59.4609H354.843H384.382Z"
+							  fill="#60534A"
+							/>
+							<path
+							  d="M285.846 70.292V99.8305H226.769H207.077H148V70.292H285.846Z"
+							  fill="#AFB9D2"
+							/>
+							<path
+							  d="M148 2.35352H285.846V71.2766H148V2.35352Z"
+							  fill="#D7DEED"
+							/>
+							<path
+							  d="M433.614 118.538V177.615H404.075H344.998H88.9982H29.9213H0.382812V118.538H29.9213H108.691H187.46H226.844H354.844H433.614Z"
+							  fill="#73665C"
+							/>
+							<path
+							  d="M423.768 39.7686C429.203 39.7686 433.614 44.1796 433.614 49.6147C433.614 55.0498 429.203 59.4609 423.768 59.4609C418.333 59.4609 413.922 55.0498 413.922 49.6147C413.922 44.1796 418.333 39.7686 423.768 39.7686Z"
+							  fill="#74829C"
+							/>
+							<path
+							  d="M69.3071 0.383789C74.7422 0.383789 79.1532 4.79487 79.1532 10.2299C79.1532 15.665 74.7422 20.0761 69.3071 20.0761C63.872 20.0761 59.4609 15.665 59.4609 10.2299C59.4609 4.79487 63.872 0.383789 69.3071 0.383789Z"
+							  fill="#74829C"
+							/>
+							<path
+							  d="M423.385 315.461H9.84615C4.40812 315.461 0 311.052 0 305.615C0 300.178 4.40812 295.769 9.84615 295.769H423.385C428.822 295.769 433.231 300.178 433.231 305.615C433.231 311.052 428.822 315.461 423.385 315.461Z"
+							  fill="#3C3B3D"
+							/>
+							<path
+							  d="M256.014 161.684C255.719 161.684 255.42 161.614 255.14 161.465L216.344 140.871L177.547 161.465C176.621 161.957 175.481 161.595 174.998 160.657C174.513 159.721 174.871 158.564 175.795 158.074L215.467 137.015C216.017 136.723 216.67 136.723 217.22 137.015L256.892 158.074C257.817 158.564 258.175 159.721 257.689 160.657C257.352 161.311 256.695 161.684 256.014 161.684Z"
+							  fill="#FFEAC6"
+							/>
+							<path
+							  d="M258.339 156H174.327L172.797 159.769V193.318C172.797 195.399 174.434 197.087 176.453 197.087H258.19C260.291 197.087 261.995 195.33 261.995 193.164V159.769C261.995 157.688 260.358 156 258.339 156Z"
+							  fill="#FF5F7A"
+							/>
+							<path
+							  d="M174.778 155.94H174.63C172.625 155.94 171 157.588 171 159.619V194.38C171 196.411 172.625 198.058 174.63 198.058H257.902C259.989 198.058 261.68 196.344 261.68 194.229H182.335C178.162 194.229 174.778 190.801 174.778 186.572V155.94Z"
+							  fill="#FB4455"
+							/>
+							<path
+							  d="M216.342 142.54C218.429 142.54 220.12 140.825 220.12 138.711C220.12 136.596 218.429 134.882 216.342 134.882C214.255 134.882 212.562 136.596 212.562 138.711C212.562 140.825 214.255 142.54 216.342 142.54Z"
+							  fill="#F5C89D"
+							/>
+							<path
+							  d="M197.239 180.263V171.821C197.239 170.764 196.394 169.906 195.35 169.906C194.306 169.906 193.461 170.764 193.461 171.821V182.284C193.461 183.172 194.109 183.907 194.975 184.047C195.162 184.077 195.104 184.094 196.407 184.094C196.754 184.094 198.088 184.092 199.327 184.09C200.373 184.088 201.218 183.224 201.211 182.163C201.205 181.108 200.36 180.257 199.319 180.259C198.496 180.26 197.63 180.261 197.239 180.263Z"
+							  fill="white"
+							/>
+							<path
+							  d="M236.018 173.782C237.062 173.782 237.907 172.925 237.907 171.868C237.907 170.81 237.062 169.953 236.018 169.953H231.749C230.704 169.953 229.859 170.81 229.859 171.868V182.131C229.859 183.189 230.704 184.046 231.749 184.046H236.018C237.062 184.046 237.907 183.189 237.907 182.131C237.907 181.074 237.062 180.217 236.018 180.217H233.638V178.914H235.702C236.746 178.914 237.591 178.057 237.591 177C237.591 175.942 236.746 175.085 235.702 175.085H233.638V173.782H236.018Z"
+							  fill="white"
+							/>
+							<path
+							  d="M188.017 179.493C187.949 179.575 187.875 179.652 187.799 179.72C187.393 180.086 186.888 180.264 186.25 180.264C184.473 180.264 183.028 178.799 183.028 177C183.028 175.2 184.473 173.735 186.25 173.735C186.897 173.735 187.519 173.928 188.048 174.291C188.915 174.884 190.087 174.652 190.672 173.778C191.257 172.902 191.03 171.711 190.166 171.12C189.008 170.326 187.654 169.906 186.25 169.906C182.39 169.906 179.25 173.088 179.25 176.999C179.25 180.911 182.39 184.093 186.25 184.093C187.81 184.093 189.214 183.569 190.314 182.577C190.532 182.381 190.735 182.168 190.921 181.94C191.589 181.127 191.48 179.92 190.677 179.244C189.871 178.567 188.681 178.68 188.017 179.493Z"
+							  fill="white"
+							/>
+							<path
+							  d="M224.226 175.284C223.057 174.848 221.979 174.381 221.557 174.194L221.586 174.141C221.607 174.004 221.747 173.885 221.97 173.817C223.09 173.471 224.171 174.321 224.223 174.364C225.02 175.031 226.2 174.92 226.87 174.118C227.542 173.309 227.438 172.101 226.64 171.421C225.667 170.592 223.359 169.396 220.882 170.151C219.24 170.652 218.077 171.973 217.847 173.598C217.629 175.138 218.288 176.618 219.568 177.463C219.651 177.519 219.74 177.566 219.83 177.607C219.83 177.607 221.295 178.27 222.918 178.877C223.616 179.138 223.894 179.455 223.869 179.598C223.83 179.823 223.429 180.264 222.686 180.264C221.431 180.264 220.714 179.57 220.524 179.357C219.819 178.575 218.625 178.515 217.854 179.225C217.081 179.936 217.024 181.146 217.723 181.93C218.954 183.304 220.763 184.093 222.686 184.093C225.136 184.093 227.199 182.485 227.588 180.271C227.872 178.657 227.163 176.383 224.226 175.284Z"
+							  fill="white"
+							/>
+							<path
+							  d="M208.718 169.906C204.859 169.906 201.719 173.088 201.719 176.999C201.719 180.911 204.859 184.093 208.718 184.093C212.578 184.093 215.718 180.911 215.718 176.999C215.718 173.088 212.578 169.906 208.718 169.906ZM208.718 180.264C206.942 180.264 205.497 178.799 205.497 176.999C205.497 175.2 206.942 173.735 208.718 173.735C210.495 173.735 211.94 175.2 211.94 176.999C211.94 178.799 210.495 180.264 208.718 180.264Z"
+							  fill="white"
+							/>
+							<path
+							  d="M244.822 170.061H242.014C241.512 170.061 241.031 170.262 240.677 170.622C240.322 170.982 240.123 171.47 240.125 171.979L240.145 182.032C240.147 182.541 240.348 183.027 240.704 183.384C241.057 183.74 241.537 183.94 242.035 183.94H242.042C242.042 183.94 244.13 183.933 244.938 183.919C248.287 183.859 250.719 180.949 250.719 177C250.718 172.914 248.294 170.061 244.822 170.061ZM244.872 180.09C244.636 180.094 244.289 180.098 243.918 180.101L243.907 173.889H244.822C246.787 173.889 246.94 176.27 246.94 177C246.94 178.52 246.3 180.065 244.872 180.09Z"
+							  fill="white"
+							/>
+						  </g>
+						  <defs>
+							<clipPath id="no-opportunities-icon">
+							  <rect width="434" height="316" fill="white" />
+							</clipPath>
+						  </defs>
+						</svg>
+					  </figure>
+	  
+					  <div class="nojobinfo">
+						<p class="infotext">This position is closed.</p>
+						<p class="infotext">Lookout for our future opportunities!</p>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+{% endif %}
+
+
+	<div class="modal fade" id="confirmedModal" tabindex="-1" aria-labelledby="confirmedModal" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+							<path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+						</svg>
+					</button>
+					<!--========== APPLIED-START ==============-->
+					<section class="applied">
+						<div class="container">
+							<div class="applied-content">
+								<div class="confirm">
+									<figure class="appliedicon">
+										<svg width="357" height="325" viewBox="0 0 357 325" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path d="M164.867 30.4102H189.132V325H164.867V30.4102Z" fill="#FECA9C"/>
+											<path d="M57.7754 29H296.224V171.54H57.7754V29Z" fill="#6FD7A3"/>
+											<path d="M272.402 29H296.225V171.54H272.402V29Z" fill="#3EC3A4"/>
+											<path d="M160.533 133.948C159.39 133.948 158.246 133.513 157.375 132.64L131.881 107.148C130.136 105.404 130.136 102.576 131.88 100.831C133.625 99.0869 136.453 99.0863 138.198 100.831L160.533 123.165L215.802 67.8982C217.546 66.1534 220.375 66.154 222.119 67.8982C223.864 69.643 223.864 72.4706 222.119 74.2154L163.691 132.64C162.819 133.513 161.675 133.948 160.533 133.948V133.948Z" fill="white"/>
+											<path d="M57.7754 283.458H123.131L130.14 289.944C135.889 295.19 143.416 298.101 151.228 298.101C161.939 298.101 174.43 298.072 190.415 298.067C199.784 298.064 207.374 290.478 207.374 281.122V236.419C207.374 227.051 199.768 219.461 190.387 219.47L164.765 219.476V197.061C149.851 197.101 136.26 205.612 129.727 219.002L123.13 232.523H57.7754V283.458Z" fill="#FFE3CB"/>
+											<path d="M190.388 219.47L166.999 219.475C176.178 219.696 183.552 227.196 183.552 236.419V281.122C183.552 290.478 175.962 298.064 166.593 298.067C160.63 298.069 155.154 298.074 150.074 298.08C150.459 298.094 150.844 298.101 151.229 298.101C161.94 298.101 174.431 298.072 190.416 298.067C199.785 298.064 207.376 290.478 207.376 281.122V236.419C207.375 227.051 199.768 219.46 190.388 219.47V219.47Z" fill="#FEDBBD"/>
+											<path d="M259.362 234.428C264.361 235.698 268.297 239.637 269.567 244.638C269.685 245.121 270.305 245.121 270.433 244.638C271.703 239.637 275.639 235.698 280.638 234.428C281.121 234.31 281.121 233.69 280.638 233.562C275.629 232.302 271.693 228.363 270.433 223.362C270.315 222.879 269.695 222.879 269.567 223.362C268.297 228.363 264.361 232.302 259.362 233.572C258.879 233.69 258.879 234.31 259.362 234.428V234.428Z" fill="#6FD7A3"/>
+											<path d="M329.459 134.509C335.809 136.122 340.809 141.122 342.422 147.472C342.572 148.084 343.359 148.084 343.522 147.472C345.134 141.122 350.134 136.122 356.484 134.509C357.097 134.359 357.097 133.572 356.484 133.409C350.122 131.809 345.122 126.809 343.522 120.459C343.372 119.847 342.584 119.847 342.422 120.459C340.809 126.809 335.809 131.809 329.459 133.422C328.847 133.572 328.847 134.359 329.459 134.509V134.509Z" fill="#6FD7A3"/>
+											<path d="M21.2625 8.225C24.8625 9.1375 27.6875 11.9625 28.6 15.5625C28.6875 15.9125 29.1375 15.9125 29.225 15.5625C30.1375 11.9625 32.9625 9.1375 36.5625 8.225C36.9125 8.1375 36.9125 7.6875 36.5625 7.6C32.9625 6.6875 30.1375 3.8625 29.225 0.2625C29.1375 -0.0875 28.6875 -0.0875 28.6 0.2625C27.6875 3.8625 24.8625 6.6875 21.2625 7.6C20.9125 7.6875 20.9125 8.1375 21.2625 8.225Z" fill="#3EC3A4"/>
+											<path d="M0.684375 184.709C10.1844 187.122 17.6719 194.597 20.0719 204.097C20.3094 205.009 21.4844 205.009 21.7094 204.097C24.1219 194.597 31.5969 187.109 41.0969 184.709C42.0094 184.472 42.0094 183.297 41.0969 183.072C31.5969 180.659 24.1094 173.184 21.7094 163.684C21.4719 162.772 20.2969 162.772 20.0719 163.684C17.6594 173.184 10.1844 180.672 0.684375 183.072C-0.228125 183.297 -0.228125 184.472 0.684375 184.709V184.709Z" fill="#A6FFD2"/>
+										</svg>
+									</figure>
+					
+									<div class="confirmed">
+										<p class="confirmed-text">Thank you! <br> We received your application. You will hear from us soon. 🙂</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+					<!--========== APPLIED-END ================-->
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block script %}
+
+    <script>
+
+        number_1 = Math.floor(Math.random() * (99 - 1 + 1) + 1)
+        number_2 = Math.floor(Math.random() * (99 - 1 + 1) + 1)
+
+        answer = number_1 + number_2
+
+        $('#mathQuestion').html(`What's ${number_1} + ${number_2} = ? *`)
+
+        function InvalidSize(input) {
+			
+          const fileSize = input.files[0].size / 1024 / 1024; // in MiB
+            let fileName = input.value.split("\\").pop()
+			
+            var re = /(\.pdf)$/i;
+            if (!re.exec(fileName)) {
+				$("#update_cv_apend_id").addClass("inputerror")
+				$('#cv_error').text(`${fileName} file format not suported, please upload only .pdf file`)
+              	return true;
+            }
+          if (fileSize > 2) {
+			$('#uploadcv').val('')
+            $('#file_name').html('No file choosen')
+			$("#update_cv_apend_id").addClass("inputerror")
+			$('#cv_error').text(`${fileName} file size exceed maximum limit. Maximum allowed file size is 2 mb`)
+            return true;
+
+          } else {
+			$("#update_cv_apend_id").removeClass("inputerror"); 
+            $('#file_name').html(fileName)
+            return false;
+          }
+        }
+
+
+        function SaveObject() {
+            let myForm = document.forms["applyform"]
+            let image =  $('#uploadcv')[0].files;
+            let firstname = myForm["firstname"].value;
+            let lastname = myForm["lastname"].value;
+            let careeremail = myForm["careeremail"].value;
+            let capcha = myForm["capcha"].value;
+			let regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+			let error= false
+
+			if (firstname == ""){
+				$("#firstname_apend_id").addClass("inputerror");
+              	$('#first_error').text('This field is required!')
+				error= true
+			}
+			else{
+				$("#firstname_apend_id").removeClass("inputerror"); 
+			}
+
+
+
+			if (lastname == ""){
+				$("#lastname_apend_id").addClass("inputerror");
+              	$('#last_error').text('This field is required!')
+				error= true
+
+			
+			}
+			else{
+				$("#lastname_apend_id").removeClass("inputerror"); 
+			}
+
+
+			if(careeremail == ""){
+				$("#email_apend_id").addClass("inputerror");
+				$('#email_error').text('This field is required!')
+				error= true
+
+			}else{
+				
+				if (!careeremail.match(regex)) { 
+					$("#email_apend_id").addClass("inputerror");
+					$('#email_error').text('Invalid email!')
+					error= true
+			
+				}
+				else{
+					$("#email_apend_id").removeClass("inputerror"); 
+				}
+			}
+
+
+			if (image.length == 0){
+				$("#update_cv_apend_id").addClass("inputerror");
+              	$('#cv_error').text('This field is required!')
+				error= true
+
+                
+			}
+			
+			if (capcha == ''){
+				$("#capcha_apend_id").addClass("inputerror");
+				$('#capcha_error').text('This field is required')
+				error= true
+			}else{
+				if (Number(capcha) != answer){
+                $("#capcha_apend_id").addClass("inputerror");
+				$('#capcha_error').text('Invalid!')
+				error= true
+
+            }
+			else{
+				$("#capcha_apend_id").removeClass("inputerror"); 
+			}
+			}
+
+			if (error){
+				return false
+			}
+
+			let formData = new FormData();
+			formData.append('firstname', firstname)
+			formData.append('lastname', lastname)
+			formData.append('careeremail', careeremail)
+			formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+			formData.append('career_id', '{{ career.id }}')
+			formData.append('image', image[0])
+
+			$('#applyButton').prop('disabled', true);
+
+			$.ajax({
+				url: "{% url 'homepage:apply_for_job_url' %}",
+				data: formData,
+				processData: false,
+				contentType: false,
+				type: "POST",
+				success: function (data) {
+					$('#applyform').trigger("reset");
+					$('#file_name').html('No file chosen')
+					$("#email_apend_id").removeClass("inputerror");
+					$("#capcha_apend_id").removeClass("inputerror");
+					$("#update_cv_apend_id").removeClass("inputerror");
+					$("#firstname_apend_id").removeClass("inputerror"); 
+					$("#lastname_apend_id").removeClass("inputerror"); 
+					$("#confirmedModal").modal('show');		
+				},
+				error: function (data) {
+				}
+			});
+
+        }
+
+
+    </script>
+
+{% endblock %}

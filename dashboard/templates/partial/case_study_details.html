@@ -1,0 +1,208 @@
+{% extends 'dashboard/base_dashboard.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="text-center">Create Case Study Details</h2>
+
+                        <form method="POST" id="managementadd" enctype="multipart/form-data" novalidate>
+                            {% csrf_token %}
+                            <input id="get_case_study_id" type="hidden" name="get_case_study_id" value="{{case_study.id}}">
+                            <div id="accordion">
+                                <div class="card" style="border: 1px dotted #999; margin-left: 200px; margin-right: 200px; margin-top: 20px;">
+                                    <div id="collapseOne"
+                                         class="collapse show"
+                                         aria-labelledby="headingOne"
+                                         data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label>About </label>
+                                                <textarea  class="case_study_about_{{case_study.id}}" name="case_study_about" >{{ case_study.case_study_about }}</textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Case Study Image  </label>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <input type="file" name="case_study_image"  class="form-control" >
+                                                    </div>
+                                                    <div class="col-4">
+                                                        {% if case_study.case_study_image %}
+                                                            <img style="width: 50px; height: 50px; margin-left: 100px;" src="/media/{{ case_study.case_study_image }}">
+                                                        {% endif %}
+                                                    </div>
+
+                                                </div>                                              
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Client Requirement  </label>
+                                                <textarea  class="case_study_requirement_{{case_study.id}}" name="client_requirement" >{{ case_study.client_requirement }}</textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Requirements Thumbnail  </label>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <input type="file" name="requirements_thumbnail"  class="form-control" >
+                                                    </div>
+                                                    <div class="col-4">
+                                                        {% if case_study.requirements_thumbnail %}
+                                                            <img style="width: 50px; height: 50px; margin-left: 100px;" src="/media/{{ case_study.requirements_thumbnail }}">
+                                                        {% endif %}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>How We Build It </label>
+                                                <textarea  class="case_study_build_{{case_study.id}}"  name="how_we_build_it" >{{ case_study.how_we_build_it }}</textarea>
+                                    
+                                            <div class="form-group">
+                                                <label>How We Build Image </label>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <input type="file" name="how_we_build_image"  class="form-control" >
+                                                    </div>
+                                                    <div class="col-4">
+                                                        {% if case_study.case_study_image %}
+                                                            <img style="width: 50px; height: 50px; margin-left: 100px;" src="/media/{{ case_study.how_we_build_image }}">
+                                                        {% endif %}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                            
+                                            <div class="form-group">
+                                                <label>Technology </label>
+                                                <select multiple name="technology" class="form-control"
+                                                        id="exampleFormControlSelect1">
+                                                    <option value="" selected disabled >Select Technology</option>
+                                                    {% for technologie in technologies %}
+                                                        <option {% if technologie in  case_study.technology.all %} selected {% endif %} value="{{ technologie.id }}">{{ technologie.title  }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Meta Description</label>
+                                                <textarea  class="form-control" name="meta_description" >{{ case_study.meta_description|safe }}</textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Keywords</label>
+                                                <textarea  class="form-control" name="keywords" >{{ case_study.keywords|safe }}</textarea>
+                                            </div>
+                                            <button name="save" value="Save&list" class="btn btn-default float-right" type="submit">
+                                                <i class="fa fa-plus-circle"></i>
+                                                Save
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                                
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+
+    $(document).ready(function() {
+        id = document.getElementById('get_case_study_id').value
+        $('.case_study_about_'+id).summernote({
+            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Merriweather','Titillium Web"'],
+            fontNamesIgnoreCheck: ['Titillium Web"'],
+            toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear',]],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']],
+            ['height', ['height']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+             ]
+            
+           
+        });
+        
+        $('.case_study_requirement_'+id).summernote({
+            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Merriweather','Titillium Web"'],
+            fontNamesIgnoreCheck: ['Titillium Web"'],
+            toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear',]],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']],
+            ['height', ['height']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+             ]
+            
+           
+        });
+        
+
+        $('.case_study_build_'+id).summernote({
+            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Merriweather','Titillium Web"'],
+            fontNamesIgnoreCheck: ['Titillium Web"'],
+            toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear',]],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']],
+            ['height', ['height']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+             ]
+            
+           
+        });
+        
+
+
+        $("#exampleFormControlSelect1").select2({
+            allowClear: true
+        });
+    });
+   
+</script>
+
+{% endblock %}
+

@@ -1,0 +1,181 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block content %}
+
+<div class="container-fluid mt-2">
+    <div class="row">
+        <div class="col">
+            <div class="card mt-3">
+            </div>
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="" id="">
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <h5>Technologies List</h5>
+                                </div>
+                                <div class="col-md-3">
+                                    <a title="Add Item" style="margin-left: 200px;" href="{% url 'dashboard:save_technologies_url' %}" class="btn btn-icon btn-sm btn-outline-primary"><i class="fas fa-plus-circle"></i></a>    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table id="subscriber_list" class="table table-borderless table-striped table-hover">
+                                <tr>
+                                    <th>Title </th>
+                                    <th>Image</th>
+                                    <th>Details Title</th>
+                                    <th>Why This Title</th>
+                                    <th>Why Choice Title</th>
+                                    <th>Features</th>
+                                    <th>Display</th>
+                                    <th>Action</th>
+                                </tr>
+                                {% for technologie in technologies %}
+                                <tr id="what_done_{{ item.id }}">
+                                    <td>{{ technologie.title }}</td>
+                                    <td>
+                                        {% if technologie.image %}
+                                        <div>
+                                            <img style="width: 50px;" src="{{ technologie.image.url }}">
+                                        </div>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ technologie.technology_details_title }}</td>
+                                 
+                                  
+                                    <td>{{ technologie.why_this_technologies_title }}</td>
+                           
+                                    <td>{{ technologie.why_choice_title }}</td>
+                                  
+                                    <td>
+                                        {% if technology_features %}
+                                            {% for item in technology_features %}
+                                                {%if item  in technologie.technology_features.all %} {{ item.title }}, <br> {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <input  onchange="change_swithc('{{technologie.id}}')" class="text-justify" type="checkbox" data-toggle="switchbutton" {% if  technologie.display == 1 %} checked {% endif %} data-onstyle="outline-dark" data-offstyle="outline-primary">
+                                    </td>
+
+                                    <th>
+                                        <div class="form-group row">
+                                            <div class="">
+                                                <form action="{% url 'dashboard:delete_technologies_url' %}"method="POST" >
+                                                    {% csrf_token %}
+                                                    <input type="hidden" value="{{technologie.id}}" name="id">
+                                                    <button  title="Delete Item" onclick="check()" class="btn btn-icon btn-sm btn-outline-primary" ><i class="fa fa-trash"></i></button>
+                                                </form> 
+                                            </div >
+                                            <div class="" style="margin-left: .5em;
+                                            margin-right: .5em;">
+                                                <button title="Add Features" class="btn btn-icon btn-sm btn-outline-primary"  data-toggle="modal"
+                                                data-target="#technologies_features_{{technologie.id}}" ><i class="fas fa-info-circle"></i></button>
+                                                 <!-- Add featurs -->
+                                                <div  class="modal fade" id="technologies_features_{{technologie.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Add Features</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+
+                                                        <form action="{% url 'dashboard:save_technologies_features_url' %}" method="POST" enctype="multipart/form-data" >
+                                                            {% csrf_token %}
+                                                            <div class="modal-body">
+                                                                <input type="hidden" value="{{ technologie.id }}" name="id">
+                                                                <div class="error text-center" style="color: red;"></div>
+                                                                <br>
+                                                                <div class="form-group row">
+                                                                    <label for="title" class="col-sm-3 col-form-label">Title <small style="color: red">*</small> </label>
+                                                                    <div class="col-sm-9">
+                                                                        <input required type="text" class="form-control" name="title" >
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="heading" class="col-sm-3 col-form-label">Heading <small style="color: red">*</small> </label>
+                                                                    <div class="col-sm-9">
+                                                                        <input required type="text" class="form-control" name="heading" >
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="description" class="col-sm-3 col-form-label">Description <small style="color: red">*</small> </label>
+                                                                    <div class="col-sm-9">
+                                                                        <textarea required type="text" class="form-control" name="description" ></textarea>
+                                                                    </div>
+                                                                </div>
+                                                             
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary"  >Save </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div cclass="">
+                                                <a title="Edit Technology" href="{% url 'dashboard:update_technologies_url' technologie.id %}" class="btn btn-icon btn-sm btn-outline-primary" ><i class="fa fa-edit"></i></a>
+                                            </div>
+                                        </div>
+                                         
+                                    </th>
+                                </tr>
+                                {% endfor %}
+                                
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+csrf = '{{ csrf_token }}';
+function check(){
+    if (confirm("Do you want to delete?") == true) {
+        return true;
+    } else {
+        //cancle the from submission 
+        $(this).submit(function(e){
+            e.preventDefault();
+            location.reload()
+            return  false;
+        })
+        
+    }
+}
+
+function change_swithc(id){
+    
+    let url = "{% url 'dashboard:change_status_technologies_url' %}";
+    var data = {'id': id, 'csrfmiddlewaretoken': csrf}
+    $.ajax({
+        url: url,
+        data: data,
+        type: "POST",
+        success: function (data) {
+            toastr.success('Status changed successfully')
+        },
+        error: function (data) {
+        }
+    });
+}
+
+</script>
+
+{% endblock %}
